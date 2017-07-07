@@ -1,0 +1,48 @@
+{% extends "main.html" %}
+{% block content %}
+	{% if user == book_to_delete.user_id %}
+	<div class="row">
+		<div class="col-md-6">
+
+			<h1 class="delete text-center"> Are you sure you want to delete:</h1>
+			</br>
+			</br>
+			</br>
+			</br>
+			</br>
+			</br>
+
+			<div class="text-center">
+				<form action="#" method = 'post'>
+					<button type='submit' class="btn btn-success" id="deleteSubmit">Delete</button>
+				</form>
+				</br>
+				</br>
+				<a href = "{{url_for('bookList')}}"><button type="button" class="btn btn-danger" id="deleteCancel">Cancel</button></a>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<h1 class="delete"> {{book_to_delete.title}} ?</h1>
+		</div>
+		
+	</div>
+	{% else %}
+		<div class="row">
+			<div class="col-md-6">
+				</br>
+				<h3>Sorry you are not the author for this summary.</h3>
+				<h3>Click button to take you back.</h3>
+				</br>
+				<a href = "{{url_for('selectedCategoryList', category_name=book_to_delete.category_name)}}"><button type="button" class="btn btn-info">Go Back</button></a>
+			</div>
+			<div class="col-md-6">
+				</br>
+				<h3>Want to create your own book summary:</h3>
+				</br>
+				</br>
+				<a href="{{url_for('newBook')}}" ><button type="button" class="btn btn-info" id="button">Create a New Book Summary</button></a>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
