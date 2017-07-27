@@ -13,7 +13,7 @@
 				<div class="col-md-6">
 					{% for category in categories %}
 						{% if category.id%2 %}
-							<a href = "{{url_for('selectedCategoryList', category_name=category.name)}}" class="a-category">{{category.name}}</a>
+							<a href = "{{url_for('selectedCategoryList', category_name=category.id)}}" class="a-category">{{category.name}}</a>
 							</br>
 							</br>
 						{% endif %}
@@ -22,7 +22,7 @@
 				<div class="col-md-6">
 					{% for category in categories %}
 						{% if category.id%2 == 0 %}
-							<a href = "{{url_for('selectedCategoryList', category_name=category.name)}}" class="a-category">{{category.name}}</a>
+							<a href = "{{url_for('selectedCategoryList', category_name=category.id)}}" class="a-category">{{category.name}}</a>
 							</br>
 							</br>
 						{% endif %}
