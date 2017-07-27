@@ -192,43 +192,51 @@ def bookList():
                                recent=recent)
 
 
-@app.route('/book/<path:category_name>/JSON')
+@app.route('/book/<int:category_name>/JSON')
 def categoryListJSON(category_name):
     selectedCategory = session.query(Book).filter_by(
                        category_name=category_name).all()
     return jsonify(BookLists=[i.serialize for i in selectedCategory])
 
 
-@app.route('/book/<path:category_name>/<path:book_view>/JSON')
+@app.route('/book/<int:category_name>/<book_view>/JSON')
 def selectedBookJSON(category_name, book_view):
     selectedBook = session.query(Book).filter_by(title=book_view).one()
     return jsonify(BookSelected=selectedBook.serialize)
 
 
-@app.route('/book/<path:category_name>/')
+@app.route('/book/<int:category_name>/')
 def selectedCategoryList(category_name):
     selectedCategory = session.query(Book).filter_by(
                        category_name=category_name).all()
+    categories = session.query(Category).filter_by(
+                        id=category_name).one()
+
     if 'username' not in login_session:
         return render_template('publiccategorylist.html',
                                selectedCategory=selectedCategory,
-                               category=category_name)
+                               category=category_name,
+                               categories=categories)
     else:
         return render_template('categorylist.html',
                                selectedCategory=selectedCategory,
                                user=getUserID(login_session['email']),
-                               category=category_name)
+                               category=category_name,
+                               categories=categories)
 
 
-@app.route('/book/<path:category_name>/<path:book_view>/')
+@app.route('/book/<int:category_name>/<book_view>/')
 def viewSelectedBook(category_name, book_view):
     bookSelected = session.query(Book).filter_by(title=book_view).one()
+    categories = session.query(Category).filter_by(id=category_name).one()
     if 'username' not in login_session:
         return render_template('publicbookview.html',
-                               bookSelected=bookSelected)
+                               bookSelected=bookSelected,
+                               categories=categories)
     else:
         return render_template('bookview.html',
                                bookSelected=bookSelected,
+                               categories=categories,
                                user=getUserID(login_session['email']))
 
 
